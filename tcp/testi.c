@@ -3,6 +3,8 @@
  *
  *  Created on: 4.2.2010
  *      Author: Administrator
+ *
+ * ja kyyyyyyyyyyyyyyykaaaaaaaaaaaaaaa jaannaaaaaaaaaaa
  */
 
 #include <stdio.h>
