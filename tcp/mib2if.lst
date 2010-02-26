@@ -1,0 +1,714 @@
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s 			page 1
+
+
+   1              		.file	"mib2if.c"
+   2              		.text
+   3              		.align	2
+   4              		.global	MibRegisterIfVars
+   5              		.type	MibRegisterIfVars, %function
+   6              	MibRegisterIfVars:
+   7              		@ Function supports interworking.
+   8              		@ args = 0, pretend = 0, frame = 0
+   9              		@ frame_needed = 0, uses_anonymous_args = 0
+  10 0000 10402DE9 		stmfd	sp!, {r4, lr}
+  11 0004 58409FE5 		ldr	r4, .L5
+  12 0008 0620A0E3 		mov	r2, #6
+  13 000c 142084E5 		str	r2, [r4, #20]
+  14 0010 50209FE5 		ldr	r2, .L5+4
+  15 0014 182084E5 		str	r2, [r4, #24]
+  16 0018 4C209FE5 		ldr	r2, .L5+8
+  17 001c 0130A0E3 		mov	r3, #1
+  18 0020 0900A0E3 		mov	r0, #9
+  19 0024 1C2084E5 		str	r2, [r4, #28]
+  20 0028 203084E5 		str	r3, [r4, #32]
+  21 002c 003084E5 		str	r3, [r4, #0]
+  22 0030 043084E5 		str	r3, [r4, #4]
+  23 0034 FEFFFFEB 		bl	malloc
+  24 0038 000050E3 		cmp	r0, #0
+  25 003c 240084E5 		str	r0, [r4, #36]
+  26 0040 28109F15 		ldrne	r1, .L5+12
+  27 0044 FEFFFF1B 		blne	strcpy
+  28              	.L2:
+  29 0048 24009FE5 		ldr	r0, .L5+16
+  30 004c 0710A0E3 		mov	r1, #7
+  31 0050 1C2080E2 		add	r2, r0, #28
+  32 0054 1730A0E3 		mov	r3, #23
+  33 0058 FEFFFFEB 		bl	SnmpMibRegister
+  34 005c 1040BDE8 		ldmfd	sp!, {r4, lr}
+  35 0060 1EFF2FE1 		bx	lr
+  36              	.L6:
+  37              		.align	2
+  38              	.L5:
+  39 0064 00000000 		.word	.LANCHOR0
+  40 0068 DC050000 		.word	1500
+  41 006c 00E1F505 		.word	100000000
+  42 0070 00000000 		.word	.LC0
+  43 0074 00000000 		.word	.LANCHOR1
+  44              		.size	MibRegisterIfVars, .-MibRegisterIfVars
+  45              		.align	2
+  46              		.type	MibVarsIfGet, %function
+  47              	MibVarsIfGet:
+  48              		@ Function supports interworking.
+  49              		@ args = 8, pretend = 0, frame = 16
+  50              		@ frame_needed = 0, uses_anonymous_args = 0
+  51 0078 FF4F2DE9 		stmfd	sp!, {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, sl, fp, lr}
+  52 007c 085090E5 		ldr	r5, [r0, #8]
+  53 0080 088085E2 		add	r8, r5, #8
+  54 0084 0060A0E1 		mov	r6, r0
+  55 0088 0801A0E1 		mov	r0, r8, asl #2
+  56 008c 01A0A0E1 		mov	sl, r1
+  57 0090 0290A0E1 		mov	r9, r2
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s 			page 2
+
+
+  58 0094 0370A0E1 		mov	r7, r3
+  59 0098 08008DE5 		str	r0, [sp, #8]
+  60 009c 34B09DE5 		ldr	fp, [sp, #52]
+  61 00a0 FEFFFFEB 		bl	malloc
+  62 00a4 14E29FE5 		ldr	lr, .L30
+  63 00a8 0040A0E1 		mov	r4, r0
+  64 00ac 0F00BEE8 		ldmia	lr!, {r0, r1, r2, r3}
+  65 00b0 04C0A0E1 		mov	ip, r4
+  66 00b4 0F00ACE8 		stmia	ip!, {r0, r1, r2, r3}
+  67 00b8 07009EE8 		ldmia	lr, {r0, r1, r2}
+  68 00bc 083096E5 		ldr	r3, [r6, #8]
+  69 00c0 07008CE8 		stmia	ip, {r0, r1, r2}
+  70 00c4 0321A0E1 		mov	r2, r3, asl #2
+  71 00c8 1C0084E2 		add	r0, r4, #28
+  72 00cc 0C1086E2 		add	r1, r6, #12
+  73 00d0 FEFFFFEB 		bl	memcpy
+  74 00d4 00C0D6E5 		ldrb	ip, [r6, #0]	@ zero_extendqisi2
+  75 00d8 00005CE3 		cmp	ip, #0
+  76 00dc 075085E2 		add	r5, r5, #7
+  77 00e0 2000001A 		bne	.L8
+  78 00e4 001099E5 		ldr	r1, [r9, #0]
+  79 00e8 0A00A0E1 		mov	r0, sl
+  80 00ec 0420A0E1 		mov	r2, r4
+  81 00f0 0830A0E1 		mov	r3, r8
+  82 00f4 05C184E7 		str	ip, [r4, r5, asl #2]
+  83 00f8 FEFFFFEB 		bl	SnmpOidCmp
+  84 00fc 000050E3 		cmp	r0, #0
+  85 0100 00005713 		cmpne	r7, #0
+  86 0104 6800001A 		bne	.L9
+  87 0108 000050E3 		cmp	r0, #0
+  88 010c 000057A3 		cmpge	r7, #0
+  89 0110 0050A013 		movne	r5, #0
+  90 0114 0150A003 		moveq	r5, #1
+  91 0118 6300000A 		beq	.L9
+  92 011c 1D0000EA 		b	.L11
+  93              	.L13:
+  94 0120 0CE09DE5 		ldr	lr, [sp, #12]
+  95 0124 001099E5 		ldr	r1, [r9, #0]
+  96 0128 00C08EE5 		str	ip, [lr, #0]
+  97 012c 04C08DE5 		str	ip, [sp, #4]
+  98 0130 FEFFFFEB 		bl	SnmpOidCmp
+  99 0134 013070E2 		rsbs	r3, r0, #1
+ 100 0138 0030A033 		movcc	r3, #0
+ 101 013c 000057E3 		cmp	r7, #0
+ 102 0140 0030A003 		moveq	r3, #0
+ 103 0144 000053E3 		cmp	r3, #0
+ 104 0148 04C09DE5 		ldr	ip, [sp, #4]
+ 105 014c 1100001A 		bne	.L11
+ 106 0150 013077E2 		rsbs	r3, r7, #1
+ 107 0154 0030A033 		movcc	r3, #0
+ 108 0158 A03F13E0 		ands	r3, r3, r0, lsr #31
+ 109 015c 0D00001A 		bne	.L11
+ 110 0160 0C50A0E1 		mov	r5, ip
+ 111 0164 020000EA 		b	.L12
+ 112              	.L8:
+ 113 0168 055184E0 		add	r5, r4, r5, asl #2
+ 114 016c 0C508DE5 		str	r5, [sp, #12]
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s 			page 3
+
+
+ 115 0170 0050A0E3 		mov	r5, #0
+ 116              	.L12:
+ 117 0174 48119FE5 		ldr	r1, .L30+4
+ 118 0178 001091E5 		ldr	r1, [r1, #0]
+ 119 017c 010055E1 		cmp	r5, r1
+ 120 0180 01C085E2 		add	ip, r5, #1
+ 121 0184 0A00A0E1 		mov	r0, sl
+ 122 0188 0420A0E1 		mov	r2, r4
+ 123 018c 0830A0E1 		mov	r3, r8
+ 124 0190 E2FFFFBA 		blt	.L13
+ 125 0194 440000EA 		b	.L9
+ 126              	.L11:
+ 127 0198 08209DE5 		ldr	r2, [sp, #8]
+ 128 019c 0A00A0E1 		mov	r0, sl
+ 129 01a0 0410A0E1 		mov	r1, r4
+ 130 01a4 FEFFFFEB 		bl	memcpy
+ 131 01a8 38209DE5 		ldr	r2, [sp, #56]
+ 132 01ac 0030A0E3 		mov	r3, #0
+ 133 01b0 003082E5 		str	r3, [r2, #0]
+ 134 01b4 043083E2 		add	r3, r3, #4
+ 135 01b8 008089E5 		str	r8, [r9, #0]
+ 136 01bc 00308BE5 		str	r3, [fp, #0]
+ 137 01c0 0030D6E5 		ldrb	r3, [r6, #0]	@ zero_extendqisi2
+ 138 01c4 160053E3 		cmp	r3, #22
+ 139 01c8 03F19F97 		ldrls	pc, [pc, r3, asl #2]
+ 140 01cc 360000EA 		b	.L9
+ 141              	.L24:
+ 142 01d0 2C020000 		.word	.L14
+ 143 01d4 34020000 		.word	.L15
+ 144 01d8 3C020000 		.word	.L16
+ 145 01dc 54020000 		.word	.L17
+ 146 01e0 5C020000 		.word	.L18
+ 147 01e4 64020000 		.word	.L19
+ 148 01e8 6C020000 		.word	.L20
+ 149 01ec 7C020000 		.word	.L21
+ 150 01f0 7C020000 		.word	.L21
+ 151 01f4 94020000 		.word	.L22
+ 152 01f8 94020000 		.word	.L22
+ 153 01fc 94020000 		.word	.L22
+ 154 0200 94020000 		.word	.L22
+ 155 0204 94020000 		.word	.L22
+ 156 0208 94020000 		.word	.L22
+ 157 020c 94020000 		.word	.L22
+ 158 0210 94020000 		.word	.L22
+ 159 0214 94020000 		.word	.L22
+ 160 0218 94020000 		.word	.L22
+ 161 021c 94020000 		.word	.L22
+ 162 0220 94020000 		.word	.L22
+ 163 0224 94020000 		.word	.L22
+ 164 0228 9C020000 		.word	.L23
+ 165              	.L14:
+ 166 022c 90509FE5 		ldr	r5, .L30+4
+ 167 0230 1E0000EA 		b	.L25
+ 168              	.L15:
+ 169 0234 8C509FE5 		ldr	r5, .L30+8
+ 170 0238 1C0000EA 		b	.L25
+ 171              	.L16:
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s 			page 4
+
+
+ 172 023c 80309FE5 		ldr	r3, .L30+4
+ 173 0240 245093E5 		ldr	r5, [r3, #36]
+ 174 0244 0500A0E1 		mov	r0, r5
+ 175 0248 FEFFFFEB 		bl	strlen
+ 176 024c 00008BE5 		str	r0, [fp, #0]
+ 177 0250 160000EA 		b	.L25
+ 178              	.L17:
+ 179 0254 70509FE5 		ldr	r5, .L30+12
+ 180 0258 140000EA 		b	.L25
+ 181              	.L18:
+ 182 025c 6C509FE5 		ldr	r5, .L30+16
+ 183 0260 120000EA 		b	.L25
+ 184              	.L19:
+ 185 0264 68509FE5 		ldr	r5, .L30+20
+ 186 0268 100000EA 		b	.L25
+ 187              	.L20:
+ 188 026c 0630A0E3 		mov	r3, #6
+ 189 0270 00308BE5 		str	r3, [fp, #0]
+ 190 0274 5C509FE5 		ldr	r5, .L30+24
+ 191 0278 0C0000EA 		b	.L25
+ 192              	.L21:
+ 193 027c 58309FE5 		ldr	r3, .L30+28
+ 194 0280 38009DE5 		ldr	r0, [sp, #56]
+ 195 0284 003080E5 		str	r3, [r0, #0]
+ 196 0288 50309FE5 		ldr	r3, .L30+32
+ 197 028c 055183E0 		add	r5, r3, r5, asl #2
+ 198 0290 060000EA 		b	.L25
+ 199              	.L22:
+ 200 0294 48509FE5 		ldr	r5, .L30+36
+ 201 0298 040000EA 		b	.L25
+ 202              	.L23:
+ 203 029c 0830A0E3 		mov	r3, #8
+ 204 02a0 00308BE5 		str	r3, [fp, #0]
+ 205 02a4 3C509FE5 		ldr	r5, .L30+40
+ 206 02a8 000000EA 		b	.L25
+ 207              	.L9:
+ 208 02ac 0050A0E3 		mov	r5, #0
+ 209              	.L25:
+ 210 02b0 0500A0E1 		mov	r0, r5
+ 211 02b4 10D08DE2 		add	sp, sp, #16
+ 212 02b8 F04FBDE8 		ldmfd	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 213 02bc 1EFF2FE1 		bx	lr
+ 214              	.L31:
+ 215              		.align	2
+ 216              	.L30:
+ 217 02c0 00000000 		.word	.LANCHOR1
+ 218 02c4 00000000 		.word	.LANCHOR0
+ 219 02c8 20000000 		.word	.LANCHOR0+32
+ 220 02cc 14000000 		.word	.LANCHOR0+20
+ 221 02d0 18000000 		.word	.LANCHOR0+24
+ 222 02d4 1C000000 		.word	.LANCHOR0+28
+ 223 02d8 0A000000 		.word	confnet+10
+ 224 02dc 00000000 		.word	MibVarsIfSet
+ 225 02e0 04000000 		.word	.LANCHOR0+4
+ 226 02e4 28000000 		.word	.LANCHOR0+40
+ 227 02e8 2C000000 		.word	.LANCHOR0+44
+ 228              		.size	MibVarsIfGet, .-MibVarsIfGet
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s 			page 5
+
+
+ 229              		.align	2
+ 230              		.type	MibVarsIfSet, %function
+ 231              	MibVarsIfSet:
+ 232              		@ Function supports interworking.
+ 233              		@ args = 8, pretend = 0, frame = 12
+ 234              		@ frame_needed = 0, uses_anonymous_args = 0
+ 235 02ec 37402DE9 		stmfd	sp!, {r0, r1, r2, r4, r5, lr}
+ 236 02f0 020050E3 		cmp	r0, #2
+ 237 02f4 0020CDE5 		strb	r2, [sp, #0]
+ 238 02f8 18509DE5 		ldr	r5, [sp, #24]
+ 239 02fc 1B00001A 		bne	.L33
+ 240 0300 240095E5 		ldr	r0, [r5, #36]
+ 241 0304 0040A0E3 		mov	r4, #0
+ 242 0308 FA2FA0E3 		mov	r2, #1000
+ 243 030c 070050E3 		cmp	r0, #7
+ 244 0310 08208DE5 		str	r2, [sp, #8]
+ 245 0314 04408DE5 		str	r4, [sp, #4]
+ 246 0318 1400001A 		bne	.L33
+ 247 031c 0020DDE5 		ldrb	r2, [sp, #0]	@ zero_extendqisi2
+ 248 0320 020052E3 		cmp	r2, #2
+ 249 0324 1200001A 		bne	.L36
+ 250 0328 040053E3 		cmp	r3, #4
+ 251 032c 01008082 		addhi	r0, r0, #1
+ 252 0330 0F00008A 		bhi	.L36
+ 253 0334 0100A0E1 		mov	r0, r1
+ 254 0338 04308DE2 		add	r3, sp, #4
+ 255 033c 08108DE2 		add	r1, sp, #8
+ 256 0340 0D20A0E1 		mov	r2, sp
+ 257 0344 FEFFFFEB 		bl	AsnUnsignedParse
+ 258 0348 283095E5 		ldr	r3, [r5, #40]
+ 259 034c 013043E2 		sub	r3, r3, #1
+ 260 0350 020053E3 		cmp	r3, #2
+ 261 0354 0500008A 		bhi	.L33
+ 262 0358 1C209FE5 		ldr	r2, .L39
+ 263 035c 033182E0 		add	r3, r2, r3, asl #2
+ 264 0360 04209DE5 		ldr	r2, [sp, #4]
+ 265 0364 0400A0E1 		mov	r0, r4
+ 266 0368 042083E5 		str	r2, [r3, #4]
+ 267 036c 000000EA 		b	.L36
+ 268              	.L33:
+ 269 0370 0000A0E3 		mov	r0, #0
+ 270              	.L36:
+ 271 0374 3E40BDE8 		ldmfd	sp!, {r1, r2, r3, r4, r5, lr}
+ 272 0378 1EFF2FE1 		bx	lr
+ 273              	.L40:
+ 274              		.align	2
+ 275              	.L39:
+ 276 037c 00000000 		.word	.LANCHOR0
+ 277              		.size	MibVarsIfSet, .-MibVarsIfSet
+ 278              		.section	.rodata.str1.1,"aMS",%progbits,1
+ 279              	.LC0:
+ 280 0000 45746865 		.ascii	"Ethernet\000"
+ 280      726E6574 
+ 280      00
+ 281              		.data
+ 282              		.align	2
+ 283              		.set	.LANCHOR1,. + 0
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s 			page 6
+
+
+ 284              		.type	base_oid, %object
+ 285              		.size	base_oid, 28
+ 286              	base_oid:
+ 287 0000 01000000 		.word	1
+ 288 0004 03000000 		.word	3
+ 289 0008 06000000 		.word	6
+ 290 000c 01000000 		.word	1
+ 291 0010 02000000 		.word	2
+ 292 0014 01000000 		.word	1
+ 293 0018 02000000 		.word	2
+ 294              		.type	mib_variables, %object
+ 295              		.size	mib_variables, 3220
+ 296              	mib_variables:
+ 297 001c 00       		.byte	0
+ 298 001d 02       		.byte	2
+ 299 001e AAAA     		.short	-21846
+ 300 0020 00000000 		.word	MibVarsIfGet
+ 301 0024 01000000 		.word	1
+ 302 0028 01000000 		.word	1
+ 303 002c 00000000 		.space	124
+ 303      00000000 
+ 303      00000000 
+ 303      00000000 
+ 303      00000000 
+ 304 00a8 01       		.byte	1
+ 305 00a9 02       		.byte	2
+ 306 00aa AAAA     		.short	-21846
+ 307 00ac 00000000 		.word	MibVarsIfGet
+ 308 00b0 03000000 		.word	3
+ 309 00b4 02000000 		.word	2
+ 310 00b8 01000000 		.word	1
+ 311 00bc 01000000 		.word	1
+ 312 00c0 00000000 		.space	116
+ 312      00000000 
+ 312      00000000 
+ 312      00000000 
+ 312      00000000 
+ 313 0134 02       		.byte	2
+ 314 0135 04       		.byte	4
+ 315 0136 AAAA     		.short	-21846
+ 316 0138 00000000 		.word	MibVarsIfGet
+ 317 013c 03000000 		.word	3
+ 318 0140 02000000 		.word	2
+ 319 0144 01000000 		.word	1
+ 320 0148 02000000 		.word	2
+ 321 014c 00000000 		.space	116
+ 321      00000000 
+ 321      00000000 
+ 321      00000000 
+ 321      00000000 
+ 322 01c0 03       		.byte	3
+ 323 01c1 02       		.byte	2
+ 324 01c2 AAAA     		.short	-21846
+ 325 01c4 00000000 		.word	MibVarsIfGet
+ 326 01c8 03000000 		.word	3
+ 327 01cc 02000000 		.word	2
+ 328 01d0 01000000 		.word	1
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s 			page 7
+
+
+ 329 01d4 03000000 		.word	3
+ 330 01d8 00000000 		.space	116
+ 330      00000000 
+ 330      00000000 
+ 330      00000000 
+ 330      00000000 
+ 331 024c 04       		.byte	4
+ 332 024d 02       		.byte	2
+ 333 024e AAAA     		.short	-21846
+ 334 0250 00000000 		.word	MibVarsIfGet
+ 335 0254 03000000 		.word	3
+ 336 0258 02000000 		.word	2
+ 337 025c 01000000 		.word	1
+ 338 0260 04000000 		.word	4
+ 339 0264 00000000 		.space	116
+ 339      00000000 
+ 339      00000000 
+ 339      00000000 
+ 339      00000000 
+ 340 02d8 05       		.byte	5
+ 341 02d9 42       		.byte	66
+ 342 02da AAAA     		.short	-21846
+ 343 02dc 00000000 		.word	MibVarsIfGet
+ 344 02e0 03000000 		.word	3
+ 345 02e4 02000000 		.word	2
+ 346 02e8 01000000 		.word	1
+ 347 02ec 05000000 		.word	5
+ 348 02f0 00000000 		.space	116
+ 348      00000000 
+ 348      00000000 
+ 348      00000000 
+ 348      00000000 
+ 349 0364 06       		.byte	6
+ 350 0365 04       		.byte	4
+ 351 0366 AAAA     		.short	-21846
+ 352 0368 00000000 		.word	MibVarsIfGet
+ 353 036c 03000000 		.word	3
+ 354 0370 02000000 		.word	2
+ 355 0374 01000000 		.word	1
+ 356 0378 06000000 		.word	6
+ 357 037c 00000000 		.space	116
+ 357      00000000 
+ 357      00000000 
+ 357      00000000 
+ 357      00000000 
+ 358 03f0 07       		.byte	7
+ 359 03f1 02       		.byte	2
+ 360 03f2 BAAA     		.short	-21830
+ 361 03f4 00000000 		.word	MibVarsIfGet
+ 362 03f8 03000000 		.word	3
+ 363 03fc 02000000 		.word	2
+ 364 0400 01000000 		.word	1
+ 365 0404 07000000 		.word	7
+ 366 0408 00000000 		.space	116
+ 366      00000000 
+ 366      00000000 
+ 366      00000000 
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s 			page 8
+
+
+ 366      00000000 
+ 367 047c 08       		.byte	8
+ 368 047d 02       		.byte	2
+ 369 047e AAAA     		.short	-21846
+ 370 0480 00000000 		.word	MibVarsIfGet
+ 371 0484 03000000 		.word	3
+ 372 0488 02000000 		.word	2
+ 373 048c 01000000 		.word	1
+ 374 0490 08000000 		.word	8
+ 375 0494 00000000 		.space	116
+ 375      00000000 
+ 375      00000000 
+ 375      00000000 
+ 375      00000000 
+ 376 0508 09       		.byte	9
+ 377 0509 43       		.byte	67
+ 378 050a AAAA     		.short	-21846
+ 379 050c 00000000 		.word	MibVarsIfGet
+ 380 0510 03000000 		.word	3
+ 381 0514 02000000 		.word	2
+ 382 0518 01000000 		.word	1
+ 383 051c 09000000 		.word	9
+ 384 0520 00000000 		.space	116
+ 384      00000000 
+ 384      00000000 
+ 384      00000000 
+ 384      00000000 
+ 385 0594 0A       		.byte	10
+ 386 0595 41       		.byte	65
+ 387 0596 AAAA     		.short	-21846
+ 388 0598 00000000 		.word	MibVarsIfGet
+ 389 059c 03000000 		.word	3
+ 390 05a0 02000000 		.word	2
+ 391 05a4 01000000 		.word	1
+ 392 05a8 0A000000 		.word	10
+ 393 05ac 00000000 		.space	116
+ 393      00000000 
+ 393      00000000 
+ 393      00000000 
+ 393      00000000 
+ 394 0620 0B       		.byte	11
+ 395 0621 41       		.byte	65
+ 396 0622 AAAA     		.short	-21846
+ 397 0624 00000000 		.word	MibVarsIfGet
+ 398 0628 03000000 		.word	3
+ 399 062c 02000000 		.word	2
+ 400 0630 01000000 		.word	1
+ 401 0634 0B000000 		.word	11
+ 402 0638 00000000 		.space	116
+ 402      00000000 
+ 402      00000000 
+ 402      00000000 
+ 402      00000000 
+ 403 06ac 0C       		.byte	12
+ 404 06ad 41       		.byte	65
+ 405 06ae AAAA     		.short	-21846
+ 406 06b0 00000000 		.word	MibVarsIfGet
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s 			page 9
+
+
+ 407 06b4 03000000 		.word	3
+ 408 06b8 02000000 		.word	2
+ 409 06bc 01000000 		.word	1
+ 410 06c0 0C000000 		.word	12
+ 411 06c4 00000000 		.space	116
+ 411      00000000 
+ 411      00000000 
+ 411      00000000 
+ 411      00000000 
+ 412 0738 0D       		.byte	13
+ 413 0739 41       		.byte	65
+ 414 073a AAAA     		.short	-21846
+ 415 073c 00000000 		.word	MibVarsIfGet
+ 416 0740 03000000 		.word	3
+ 417 0744 02000000 		.word	2
+ 418 0748 01000000 		.word	1
+ 419 074c 0D000000 		.word	13
+ 420 0750 00000000 		.space	116
+ 420      00000000 
+ 420      00000000 
+ 420      00000000 
+ 420      00000000 
+ 421 07c4 0E       		.byte	14
+ 422 07c5 41       		.byte	65
+ 423 07c6 AAAA     		.short	-21846
+ 424 07c8 00000000 		.word	MibVarsIfGet
+ 425 07cc 03000000 		.word	3
+ 426 07d0 02000000 		.word	2
+ 427 07d4 01000000 		.word	1
+ 428 07d8 0E000000 		.word	14
+ 429 07dc 00000000 		.space	116
+ 429      00000000 
+ 429      00000000 
+ 429      00000000 
+ 429      00000000 
+ 430 0850 0F       		.byte	15
+ 431 0851 41       		.byte	65
+ 432 0852 AAAA     		.short	-21846
+ 433 0854 00000000 		.word	MibVarsIfGet
+ 434 0858 03000000 		.word	3
+ 435 085c 02000000 		.word	2
+ 436 0860 01000000 		.word	1
+ 437 0864 0F000000 		.word	15
+ 438 0868 00000000 		.space	116
+ 438      00000000 
+ 438      00000000 
+ 438      00000000 
+ 438      00000000 
+ 439 08dc 10       		.byte	16
+ 440 08dd 41       		.byte	65
+ 441 08de AAAA     		.short	-21846
+ 442 08e0 00000000 		.word	MibVarsIfGet
+ 443 08e4 03000000 		.word	3
+ 444 08e8 02000000 		.word	2
+ 445 08ec 01000000 		.word	1
+ 446 08f0 10000000 		.word	16
+ 447 08f4 00000000 		.space	116
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s 			page 10
+
+
+ 447      00000000 
+ 447      00000000 
+ 447      00000000 
+ 447      00000000 
+ 448 0968 11       		.byte	17
+ 449 0969 41       		.byte	65
+ 450 096a AAAA     		.short	-21846
+ 451 096c 00000000 		.word	MibVarsIfGet
+ 452 0970 03000000 		.word	3
+ 453 0974 02000000 		.word	2
+ 454 0978 01000000 		.word	1
+ 455 097c 11000000 		.word	17
+ 456 0980 00000000 		.space	116
+ 456      00000000 
+ 456      00000000 
+ 456      00000000 
+ 456      00000000 
+ 457 09f4 12       		.byte	18
+ 458 09f5 41       		.byte	65
+ 459 09f6 AAAA     		.short	-21846
+ 460 09f8 00000000 		.word	MibVarsIfGet
+ 461 09fc 03000000 		.word	3
+ 462 0a00 02000000 		.word	2
+ 463 0a04 01000000 		.word	1
+ 464 0a08 12000000 		.word	18
+ 465 0a0c 00000000 		.space	116
+ 465      00000000 
+ 465      00000000 
+ 465      00000000 
+ 465      00000000 
+ 466 0a80 13       		.byte	19
+ 467 0a81 41       		.byte	65
+ 468 0a82 AAAA     		.short	-21846
+ 469 0a84 00000000 		.word	MibVarsIfGet
+ 470 0a88 03000000 		.word	3
+ 471 0a8c 02000000 		.word	2
+ 472 0a90 01000000 		.word	1
+ 473 0a94 13000000 		.word	19
+ 474 0a98 00000000 		.space	116
+ 474      00000000 
+ 474      00000000 
+ 474      00000000 
+ 474      00000000 
+ 475 0b0c 14       		.byte	20
+ 476 0b0d 41       		.byte	65
+ 477 0b0e AAAA     		.short	-21846
+ 478 0b10 00000000 		.word	MibVarsIfGet
+ 479 0b14 03000000 		.word	3
+ 480 0b18 02000000 		.word	2
+ 481 0b1c 01000000 		.word	1
+ 482 0b20 14000000 		.word	20
+ 483 0b24 00000000 		.space	116
+ 483      00000000 
+ 483      00000000 
+ 483      00000000 
+ 483      00000000 
+ 484 0b98 15       		.byte	21
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s 			page 11
+
+
+ 485 0b99 42       		.byte	66
+ 486 0b9a AAAA     		.short	-21846
+ 487 0b9c 00000000 		.word	MibVarsIfGet
+ 488 0ba0 03000000 		.word	3
+ 489 0ba4 02000000 		.word	2
+ 490 0ba8 01000000 		.word	1
+ 491 0bac 15000000 		.word	21
+ 492 0bb0 00000000 		.space	116
+ 492      00000000 
+ 492      00000000 
+ 492      00000000 
+ 492      00000000 
+ 493 0c24 16       		.byte	22
+ 494 0c25 06       		.byte	6
+ 495 0c26 AAAA     		.short	-21846
+ 496 0c28 00000000 		.word	MibVarsIfGet
+ 497 0c2c 03000000 		.word	3
+ 498 0c30 02000000 		.word	2
+ 499 0c34 01000000 		.word	1
+ 500 0c38 16000000 		.word	22
+ 501 0c3c 00000000 		.space	116
+ 501      00000000 
+ 501      00000000 
+ 501      00000000 
+ 501      00000000 
+ 502              		.bss
+ 503              		.align	2
+ 504              		.set	.LANCHOR0,. + 0
+ 505              		.type	if_number, %object
+ 506              		.size	if_number, 4
+ 507              	if_number:
+ 508 0000 00000000 		.space	4
+ 509              		.type	if_admin_status, %object
+ 510              		.size	if_admin_status, 16
+ 511              	if_admin_status:
+ 512 0004 00000000 		.space	16
+ 512      00000000 
+ 512      00000000 
+ 512      00000000 
+ 513              		.type	if_type, %object
+ 514              		.size	if_type, 4
+ 515              	if_type:
+ 516 0014 00000000 		.space	4
+ 517              		.type	if_mtu, %object
+ 518              		.size	if_mtu, 4
+ 519              	if_mtu:
+ 520 0018 00000000 		.space	4
+ 521              		.type	if_speed, %object
+ 522              		.size	if_speed, 4
+ 523              	if_speed:
+ 524 001c 00000000 		.space	4
+ 525              		.type	if_index, %object
+ 526              		.size	if_index, 4
+ 527              	if_index:
+ 528 0020 00000000 		.space	4
+ 529              		.type	if_descr, %object
+ 530              		.size	if_descr, 4
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s 			page 12
+
+
+ 531              	if_descr:
+ 532 0024 00000000 		.space	4
+ 533              		.type	zero.2228, %object
+ 534              		.size	zero.2228, 4
+ 535              	zero.2228:
+ 536 0028 00000000 		.space	4
+ 537              		.type	if_specific, %object
+ 538              		.size	if_specific, 8
+ 539              	if_specific:
+ 540 002c 00000000 		.space	8
+ 540      00000000 
+ 541              		.ident	"GCC: (GNU) 4.4.2"
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s 			page 13
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 mib2if.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s:3      .text:00000000 $a
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s:6      .text:00000000 MibRegisterIfVars
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s:39     .text:00000064 $d
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s:45     .text:00000078 $a
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s:47     .text:00000078 MibVarsIfGet
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s:142    .text:000001d0 $d
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s:166    .text:0000022c $a
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s:217    .text:000002c0 $d
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s:231    .text:000002ec MibVarsIfSet
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s:229    .text:000002ec $a
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s:276    .text:0000037c $d
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s:282    .data:00000000 $d
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s:286    .data:00000000 base_oid
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s:296    .data:0000001c mib_variables
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s:503    .bss:00000000 $d
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s:507    .bss:00000000 if_number
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s:511    .bss:00000004 if_admin_status
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s:515    .bss:00000014 if_type
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s:519    .bss:00000018 if_mtu
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s:523    .bss:0000001c if_speed
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s:527    .bss:00000020 if_index
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s:531    .bss:00000024 if_descr
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s:535    .bss:00000028 zero.2228
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccePQ9dl.s:539    .bss:0000002c if_specific
+
+UNDEFINED SYMBOLS
+malloc
+strcpy
+SnmpMibRegister
+memcpy
+SnmpOidCmp
+strlen
+confnet
+AsnUnsignedParse

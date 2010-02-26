@@ -1,0 +1,208 @@
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\cc4Vte20.s 			page 1
+
+
+   1              		.file	"tcp1.c"
+   2              		.text
+   3              		.align	2
+   4              		.global	main
+   5              		.type	main, %function
+   6              	main:
+   7              		@ Function supports interworking.
+   8              		@ args = 0, pretend = 0, frame = 12
+   9              		@ frame_needed = 0, uses_anonymous_args = 0
+  10 0000 37402DE9 		stmfd	sp!, {r0, r1, r2, r4, r5, lr}
+  11 0004 00319FE5 		ldr	r3, .L12
+  12 0008 030093E8 		ldmia	r3, {r0, r1}
+  13 000c FC309FE5 		ldr	r3, .L12+4
+  14 0010 00008DE5 		str	r0, [sp, #0]
+  15 0014 08308DE5 		str	r3, [sp, #8]
+  16 0018 B410CDE1 		strh	r1, [sp, #4]	@ movhi
+  17              	.L2:
+  18 001c 0010A0E3 		mov	r1, #0
+  19 0020 EC009FE5 		ldr	r0, .L12+8
+  20 0024 0120A0E1 		mov	r2, r1
+  21 0028 FEFFFFEB 		bl	NutRegisterDevice
+  22 002c 000050E3 		cmp	r0, #0
+  23 0030 F9FFFF1A 		bne	.L2
+  24 0034 DC409FE5 		ldr	r4, .L12+12
+  25 0038 DC109FE5 		ldr	r1, .L12+16
+  26 003c 042094E5 		ldr	r2, [r4, #4]
+  27 0040 D8009FE5 		ldr	r0, .L12+20
+  28 0044 FEFFFFEB 		bl	freopen
+  29 0048 D0009FE5 		ldr	r0, .L12+20
+  30 004c D0109FE5 		ldr	r1, .L12+24
+  31 0050 082094E5 		ldr	r2, [r4, #8]
+  32 0054 FEFFFFEB 		bl	freopen
+  33 0058 08508DE2 		add	r5, sp, #8
+  34              	.L3:
+  35 005c 040094E5 		ldr	r0, [r4, #4]
+  36 0060 FEFFFFEB 		bl	_fileno
+  37 0064 BC109FE5 		ldr	r1, .L12+28
+  38 0068 0520A0E1 		mov	r2, r5
+  39 006c FEFFFFEB 		bl	_ioctl
+  40 0070 000050E3 		cmp	r0, #0
+  41 0074 F8FFFF1A 		bne	.L3
+  42 0078 0A0080E2 		add	r0, r0, #10
+  43 007c FEFFFFEB 		bl	putchar
+  44 0080 A4009FE5 		ldr	r0, .L12+32
+  45 0084 FEFFFFEB 		bl	puts
+  46              	.L4:
+  47 0088 A0009FE5 		ldr	r0, .L12+36
+  48 008c 831CA0E3 		mov	r1, #33536
+  49 0090 0520A0E3 		mov	r2, #5
+  50 0094 FEFFFFEB 		bl	NutRegisterDevice
+  51 0098 000050E3 		cmp	r0, #0
+  52 009c F9FFFF1A 		bne	.L4
+  53 00a0 8C009FE5 		ldr	r0, .L12+40
+  54 00a4 FEFFFFEB 		bl	puts
+  55 00a8 88009FE5 		ldr	r0, .L12+44
+  56 00ac FEFFFFEB 		bl	puts
+  57 00b0 0D40A0E1 		mov	r4, sp
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\cc4Vte20.s 			page 2
+
+
+  58              	.L5:
+  59 00b4 80009FE5 		ldr	r0, .L12+48
+  60 00b8 FEFFFFEB 		bl	inet_addr
+  61 00bc 0050A0E1 		mov	r5, r0
+  62 00c0 78009FE5 		ldr	r0, .L12+52
+  63 00c4 FEFFFFEB 		bl	inet_addr
+  64 00c8 0520A0E1 		mov	r2, r5
+  65 00cc 0030A0E1 		mov	r3, r0
+  66 00d0 0D10A0E1 		mov	r1, sp
+  67 00d4 68009FE5 		ldr	r0, .L12+56
+  68 00d8 FEFFFFEB 		bl	NutNetIfConfig
+  69 00dc 005050E2 		subs	r5, r0, #0
+  70 00e0 F3FFFF1A 		bne	.L5
+  71 00e4 5C009FE5 		ldr	r0, .L12+60
+  72 00e8 FEFFFFEB 		bl	puts
+  73 00ec 58009FE5 		ldr	r0, .L12+64
+  74 00f0 FEFFFFEB 		bl	puts
+  75 00f4 54009FE5 		ldr	r0, .L12+68
+  76 00f8 FEFFFFEB 		bl	puts
+  77 00fc FEFFFFEB 		bl	udpsocket
+  78 0100 0500A0E1 		mov	r0, r5
+  79 0104 3E40BDE8 		ldmfd	sp!, {r1, r2, r3, r4, r5, lr}
+  80 0108 1EFF2FE1 		bx	lr
+  81              	.L13:
+  82              		.align	2
+  83              	.L12:
+  84 010c 00000000 		.word	.LANCHOR0
+  85 0110 00C20100 		.word	115200
+  86 0114 00000000 		.word	devUsartAt910
+  87 0118 00000000 		.word	__iob
+  88 011c 06000000 		.word	.LC1
+  89 0120 00000000 		.word	.LC0
+  90 0124 08000000 		.word	.LC2
+  91 0128 01010000 		.word	257
+  92 012c 0A000000 		.word	.LC3
+  93 0130 00000000 		.word	devDM9000E
+  94 0134 24000000 		.word	.LC4
+  95 0138 3A000000 		.word	.LC5
+  96 013c 5B000000 		.word	.LC6
+  97 0140 6A000000 		.word	.LC7
+  98 0144 78000000 		.word	.LC8
+  99 0148 7D000000 		.word	.LC9
+ 100 014c 9A000000 		.word	.LC10
+ 101 0150 B5000000 		.word	.LC11
+ 102              		.size	main, .-main
+ 103              		.section	.rodata
+ 104              		.align	2
+ 105              		.set	.LANCHOR0,. + 0
+ 106              		.type	C.0.2928, %object
+ 107              		.size	C.0.2928, 6
+ 108              	C.0.2928:
+ 109 0000 00       		.byte	0
+ 110 0001 06       		.byte	6
+ 111 0002 98       		.byte	-104
+ 112 0003 33       		.byte	51
+ 113 0004 44       		.byte	68
+ 114 0005 00       		.byte	0
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\cc4Vte20.s 			page 3
+
+
+ 115 0006 0000     		.section	.rodata.str1.1,"aMS",%progbits,1
+ 116              	.LC0:
+ 117 0000 75617274 		.ascii	"uart0\000"
+ 117      3000
+ 118              	.LC1:
+ 119 0006 7700     		.ascii	"w\000"
+ 120              	.LC2:
+ 121 0008 7200     		.ascii	"r\000"
+ 122              	.LC3:
+ 123 000a 52656769 		.ascii	"Registering LAN device...\000"
+ 123      73746572 
+ 123      696E6720 
+ 123      4C414E20 
+ 123      64657669 
+ 124              	.LC4:
+ 125 0024 4C414E20 		.ascii	"LAN device registered\000"
+ 125      64657669 
+ 125      63652072 
+ 125      65676973 
+ 125      74657265 
+ 126              	.LC5:
+ 127 003a 436F6E66 		.ascii	"Configuring network interface...\000"
+ 127      69677572 
+ 127      696E6720 
+ 127      6E657477 
+ 127      6F726B20 
+ 128              	.LC6:
+ 129 005b 3136392E 		.ascii	"169.254.16.244\000"
+ 129      3235342E 
+ 129      31362E32 
+ 129      343400
+ 130              	.LC7:
+ 131 006a 3235352E 		.ascii	"255.255.255.0\000"
+ 131      3235352E 
+ 131      3235352E 
+ 131      3000
+ 132              	.LC8:
+ 133 0078 65746830 		.ascii	"eth0\000"
+ 133      00
+ 134              	.LC9:
+ 135 007d 4E657477 		.ascii	"Network interface configured\000"
+ 135      6F726B20 
+ 135      696E7465 
+ 135      72666163 
+ 135      6520636F 
+ 136              	.LC10:
+ 137 009a 0A204D79 		.ascii	"\012 My ip is: 169.254.16.244\000"
+ 137      20697020 
+ 137      69733A20 
+ 137      3136392E 
+ 137      3235342E 
+ 138              	.LC11:
+ 139 00b5 536E6D70 		.ascii	"SnmpAgent start running\000"
+ 139      4167656E 
+ 139      74207374 
+ 139      61727420 
+ 139      72756E6E 
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\cc4Vte20.s 			page 4
+
+
+ 140              		.ident	"GCC: (GNU) 4.4.2"
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\cc4Vte20.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 tcp1.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\cc4Vte20.s:3      .text:00000000 $a
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\cc4Vte20.s:6      .text:00000000 main
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\cc4Vte20.s:84     .text:0000010c $d
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\cc4Vte20.s:104    .rodata:00000000 $d
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\cc4Vte20.s:108    .rodata:00000000 C.0.2928
+
+UNDEFINED SYMBOLS
+NutRegisterDevice
+freopen
+_fileno
+_ioctl
+putchar
+puts
+inet_addr
+NutNetIfConfig
+udpsocket
+devUsartAt910
+__iob
+devDM9000E

@@ -1,0 +1,355 @@
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccwlIVEP.s 			page 1
+
+
+   1              		.file	"snmp.c"
+   2              		.text
+   3              		.align	2
+   4              		.type	MibVarsOwnGet, %function
+   5              	MibVarsOwnGet:
+   6              		@ Function supports interworking.
+   7              		@ args = 8, pretend = 0, frame = 4
+   8              		@ frame_needed = 0, uses_anonymous_args = 0
+   9 0000 F14F2DE9 		stmfd	sp!, {r0, r4, r5, r6, r7, r8, r9, sl, fp, lr}
+  10 0004 08C090E5 		ldr	ip, [r0, #8]
+  11 0008 08708CE2 		add	r7, ip, #8
+  12 000c 0791A0E1 		mov	r9, r7, asl #2
+  13 0010 0060A0E1 		mov	r6, r0
+  14 0014 07C08CE2 		add	ip, ip, #7
+  15 0018 0900A0E1 		mov	r0, r9
+  16 001c 01A0A0E1 		mov	sl, r1
+  17 0020 02B0A0E1 		mov	fp, r2
+  18 0024 0380A0E1 		mov	r8, r3
+  19 0028 00C08DE5 		str	ip, [sp, #0]
+  20 002c FEFFFFEB 		bl	malloc
+  21 0030 E4509FE5 		ldr	r5, .L12
+  22 0034 05E0A0E1 		mov	lr, r5
+  23 0038 0040A0E1 		mov	r4, r0
+  24 003c 0F00BEE8 		ldmia	lr!, {r0, r1, r2, r3}
+  25 0040 04C0A0E1 		mov	ip, r4
+  26 0044 0F00ACE8 		stmia	ip!, {r0, r1, r2, r3}
+  27 0048 07009EE8 		ldmia	lr, {r0, r1, r2}
+  28 004c 083096E5 		ldr	r3, [r6, #8]
+  29 0050 07008CE8 		stmia	ip, {r0, r1, r2}
+  30 0054 0321A0E1 		mov	r2, r3, asl #2
+  31 0058 0C1086E2 		add	r1, r6, #12
+  32 005c 1C0084E2 		add	r0, r4, #28
+  33 0060 FEFFFFEB 		bl	memcpy
+  34 0064 00E09DE5 		ldr	lr, [sp, #0]
+  35 0068 00109BE5 		ldr	r1, [fp, #0]
+  36 006c 00C0A0E3 		mov	ip, #0
+  37 0070 0A00A0E1 		mov	r0, sl
+  38 0074 0420A0E1 		mov	r2, r4
+  39 0078 0730A0E1 		mov	r3, r7
+  40 007c 0EC184E7 		str	ip, [r4, lr, asl #2]
+  41 0080 FEFFFFEB 		bl	SnmpOidCmp
+  42 0084 000050E3 		cmp	r0, #0
+  43 0088 00005813 		cmpne	r8, #0
+  44 008c 1F00001A 		bne	.L2
+  45 0090 000050E3 		cmp	r0, #0
+  46 0094 000058A3 		cmpge	r8, #0
+  47 0098 0080A013 		movne	r8, #0
+  48 009c 0180A003 		moveq	r8, #1
+  49 00a0 1A00000A 		beq	.L2
+  50 00a4 0920A0E1 		mov	r2, r9
+  51 00a8 0A00A0E1 		mov	r0, sl
+  52 00ac 0410A0E1 		mov	r1, r4
+  53 00b0 FEFFFFEB 		bl	memcpy
+  54 00b4 2C309DE5 		ldr	r3, [sp, #44]
+  55 00b8 008083E5 		str	r8, [r3, #0]
+  56 00bc 28309DE5 		ldr	r3, [sp, #40]
+  57 00c0 0420A0E3 		mov	r2, #4
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccwlIVEP.s 			page 2
+
+
+  58 00c4 00708BE5 		str	r7, [fp, #0]
+  59 00c8 002083E5 		str	r2, [r3, #0]
+  60 00cc 0030D6E5 		ldrb	r3, [r6, #0]	@ zero_extendqisi2
+  61 00d0 010053E3 		cmp	r3, #1
+  62 00d4 0900000A 		beq	.L4
+  63 00d8 0200003A 		bcc	.L3
+  64 00dc 020053E3 		cmp	r3, #2
+  65 00e0 0A00001A 		bne	.L2
+  66 00e4 030000EA 		b	.L11
+  67              	.L3:
+  68 00e8 30009FE5 		ldr	r0, .L12+4
+  69 00ec FEFFFFEB 		bl	puts
+  70 00f0 2C009FE5 		ldr	r0, .L12+8
+  71 00f4 060000EA 		b	.L6
+  72              	.L11:
+  73 00f8 28009FE5 		ldr	r0, .L12+12
+  74 00fc 000000EA 		b	.L8
+  75              	.L4:
+  76 0100 24009FE5 		ldr	r0, .L12+16
+  77              	.L8:
+  78 0104 FEFFFFEB 		bl	puts
+  79 0108 1C0085E2 		add	r0, r5, #28
+  80 010c 000000EA 		b	.L6
+  81              	.L2:
+  82 0110 0000A0E3 		mov	r0, #0
+  83              	.L6:
+  84 0114 F84FBDE8 		ldmfd	sp!, {r3, r4, r5, r6, r7, r8, r9, sl, fp, lr}
+  85 0118 1EFF2FE1 		bx	lr
+  86              	.L13:
+  87              		.align	2
+  88              	.L12:
+  89 011c 00000000 		.word	.LANCHOR0
+  90 0120 00000000 		.word	.LC0
+  91 0124 00000000 		.word	.LANCHOR1
+  92 0128 08000000 		.word	.LC1
+  93 012c 10000000 		.word	.LC2
+  94              		.size	MibVarsOwnGet, .-MibVarsOwnGet
+  95              		.align	2
+  96              		.type	T.26, %function
+  97              	T.26:
+  98              		@ Function supports interworking.
+  99              		@ args = 0, pretend = 0, frame = 0
+ 100              		@ frame_needed = 0, uses_anonymous_args = 0
+ 101 0130 000050E3 		cmp	r0, #0
+ 102 0134 30402DE9 		stmfd	sp!, {r4, r5, lr}
+ 103 0138 0150A0E1 		mov	r5, r1
+ 104 013c FEFFFF1B 		blne	free
+ 105              	.L15:
+ 106 0140 0500A0E1 		mov	r0, r5
+ 107 0144 FEFFFFEB 		bl	strlen
+ 108 0148 010080E2 		add	r0, r0, #1
+ 109 014c FEFFFFEB 		bl	malloc
+ 110 0150 004050E2 		subs	r4, r0, #0
+ 111 0154 0510A011 		movne	r1, r5
+ 112 0158 FEFFFF1B 		blne	strcpy
+ 113              	.L16:
+ 114 015c 0400A0E1 		mov	r0, r4
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccwlIVEP.s 			page 3
+
+
+ 115 0160 3040BDE8 		ldmfd	sp!, {r4, r5, lr}
+ 116 0164 1EFF2FE1 		bx	lr
+ 117              		.size	T.26, .-T.26
+ 118              		.align	2
+ 119              		.global	MibRegisterOwnVars
+ 120              		.type	MibRegisterOwnVars, %function
+ 121              	MibRegisterOwnVars:
+ 122              		@ Function supports interworking.
+ 123              		@ args = 0, pretend = 0, frame = 0
+ 124              		@ frame_needed = 0, uses_anonymous_args = 0
+ 125 0168 10402DE9 		stmfd	sp!, {r4, lr}
+ 126 016c B0409FE5 		ldr	r4, .L25
+ 127 0170 B0109FE5 		ldr	r1, .L25+4
+ 128 0174 040084E2 		add	r0, r4, #4
+ 129 0178 FEFFFFEB 		bl	strcpy
+ 130 017c A8109FE5 		ldr	r1, .L25+8
+ 131 0180 040084E2 		add	r0, r4, #4
+ 132 0184 FEFFFFEB 		bl	strcat
+ 133 0188 FEFFFFEB 		bl	NutVersionString
+ 134 018c 0010A0E1 		mov	r1, r0
+ 135 0190 040084E2 		add	r0, r4, #4
+ 136 0194 FEFFFFEB 		bl	strcat
+ 137 0198 90009FE5 		ldr	r0, .L25+12
+ 138 019c FEFFFFEB 		bl	getenv
+ 139 01a0 001050E2 		subs	r1, r0, #0
+ 140 01a4 0200000A 		beq	.L19
+ 141 01a8 840094E5 		ldr	r0, [r4, #132]
+ 142 01ac DFFFFFEB 		bl	T.26
+ 143 01b0 840084E5 		str	r0, [r4, #132]
+ 144              	.L19:
+ 145 01b4 78009FE5 		ldr	r0, .L25+16
+ 146 01b8 FEFFFFEB 		bl	getenv
+ 147 01bc 60409FE5 		ldr	r4, .L25
+ 148 01c0 001050E2 		subs	r1, r0, #0
+ 149 01c4 88009415 		ldrne	r0, [r4, #136]
+ 150 01c8 88009405 		ldreq	r0, [r4, #136]
+ 151 01cc 64109F05 		ldreq	r1, .L25+20
+ 152 01d0 D6FFFFEB 		bl	T.26
+ 153 01d4 880084E5 		str	r0, [r4, #136]
+ 154 01d8 5C009FE5 		ldr	r0, .L25+24
+ 155 01dc FEFFFFEB 		bl	getenv
+ 156 01e0 001050E2 		subs	r1, r0, #0
+ 157 01e4 0300000A 		beq	.L22
+ 158 01e8 34409FE5 		ldr	r4, .L25
+ 159 01ec 8C0094E5 		ldr	r0, [r4, #140]
+ 160 01f0 CEFFFFEB 		bl	T.26
+ 161 01f4 8C0084E5 		str	r0, [r4, #140]
+ 162              	.L22:
+ 163 01f8 0000A0E3 		mov	r0, #0
+ 164 01fc FEFFFFEB 		bl	time
+ 165 0200 1C309FE5 		ldr	r3, .L25
+ 166 0204 900083E5 		str	r0, [r3, #144]
+ 167 0208 30009FE5 		ldr	r0, .L25+28
+ 168 020c 0710A0E3 		mov	r1, #7
+ 169 0210 202080E2 		add	r2, r0, #32
+ 170 0214 0330A0E3 		mov	r3, #3
+ 171 0218 FEFFFFEB 		bl	SnmpMibRegister
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccwlIVEP.s 			page 4
+
+
+ 172 021c 1040BDE8 		ldmfd	sp!, {r4, lr}
+ 173 0220 1EFF2FE1 		bx	lr
+ 174              	.L26:
+ 175              		.align	2
+ 176              	.L25:
+ 177 0224 00000000 		.word	.LANCHOR1
+ 178 0228 18000000 		.word	.LC3
+ 179 022c 1F000000 		.word	.LC4
+ 180 0230 28000000 		.word	.LC5
+ 181 0234 33000000 		.word	.LC6
+ 182 0238 03000000 		.word	confos+3
+ 183 023c 3B000000 		.word	.LC7
+ 184 0240 00000000 		.word	.LANCHOR0
+ 185              		.size	MibRegisterOwnVars, .-MibRegisterOwnVars
+ 186              		.section	.rodata.str1.1,"aMS",%progbits,1
+ 187              	.LC0:
+ 188 0000 4F494420 		.ascii	"OID = 0\000"
+ 188      3D203000 
+ 189              	.LC1:
+ 190 0008 4F494420 		.ascii	"OID = 1\000"
+ 190      3D203100 
+ 191              	.LC2:
+ 192 0010 4F494420 		.ascii	"OID = 2\000"
+ 192      3D203200 
+ 193              	.LC3:
+ 194 0018 43757374 		.ascii	"Custom\000"
+ 194      6F6D00
+ 195              	.LC4:
+ 196 001f 204E7574 		.ascii	" Nut/OS \000"
+ 196      2F4F5320 
+ 196      00
+ 197              	.LC5:
+ 198 0028 53595343 		.ascii	"SYSCONTACT\000"
+ 198      4F4E5441 
+ 198      435400
+ 199              	.LC6:
+ 200 0033 5359534E 		.ascii	"SYSNAME\000"
+ 200      414D4500 
+ 201              	.LC7:
+ 202 003b 5359534C 		.ascii	"SYSLOCATION\000"
+ 202      4F434154 
+ 202      494F4E00 
+ 203              		.data
+ 204              		.align	2
+ 205              		.set	.LANCHOR0,. + 0
+ 206              		.type	base_oid, %object
+ 207              		.size	base_oid, 28
+ 208              	base_oid:
+ 209 0000 01000000 		.word	1
+ 210 0004 03000000 		.word	3
+ 211 0008 06000000 		.word	6
+ 212 000c 01000000 		.word	1
+ 213 0010 03000000 		.word	3
+ 214 0014 37000000 		.word	55
+ 215 0018 00000000 		.word	0
+ 216              		.type	sys_services, %object
+ 217              		.size	sys_services, 4
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccwlIVEP.s 			page 5
+
+
+ 218              	sys_services:
+ 219 001c 48000000 		.word	72
+ 220              		.type	mib_variables, %object
+ 221              		.size	mib_variables, 420
+ 222              	mib_variables:
+ 223 0020 00       		.byte	0
+ 224 0021 04       		.byte	4
+ 225 0022 BAAA     		.short	-21830
+ 226 0024 00000000 		.word	MibVarsOwnGet
+ 227 0028 01000000 		.word	1
+ 228 002c 00000000 		.word	0
+ 229 0030 00000000 		.space	124
+ 229      00000000 
+ 229      00000000 
+ 229      00000000 
+ 229      00000000 
+ 230 00ac 01       		.byte	1
+ 231 00ad 02       		.byte	2
+ 232 00ae AAAA     		.short	-21846
+ 233 00b0 00000000 		.word	MibVarsOwnGet
+ 234 00b4 01000000 		.word	1
+ 235 00b8 01000000 		.word	1
+ 236 00bc 00000000 		.space	124
+ 236      00000000 
+ 236      00000000 
+ 236      00000000 
+ 236      00000000 
+ 237 0138 02       		.byte	2
+ 238 0139 02       		.byte	2
+ 239 013a AAAA     		.short	-21846
+ 240 013c 00000000 		.word	MibVarsOwnGet
+ 241 0140 01000000 		.word	1
+ 242 0144 02000000 		.word	2
+ 243 0148 00000000 		.space	124
+ 243      00000000 
+ 243      00000000 
+ 243      00000000 
+ 243      00000000 
+ 244              		.bss
+ 245              		.align	2
+ 246              		.set	.LANCHOR1,. + 0
+ 247              		.type	empty.2504, %object
+ 248              		.size	empty.2504, 1
+ 249              	empty.2504:
+ 250 0000 00       		.space	1
+ 251 0001 000000   		.space	3
+ 252              		.type	sys_descr, %object
+ 253              		.size	sys_descr, 128
+ 254              	sys_descr:
+ 255 0004 00000000 		.space	128
+ 255      00000000 
+ 255      00000000 
+ 255      00000000 
+ 255      00000000 
+ 256              		.type	sys_contact, %object
+ 257              		.size	sys_contact, 4
+ 258              	sys_contact:
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccwlIVEP.s 			page 6
+
+
+ 259 0084 00000000 		.space	4
+ 260              		.type	sys_name, %object
+ 261              		.size	sys_name, 4
+ 262              	sys_name:
+ 263 0088 00000000 		.space	4
+ 264              		.type	sys_location, %object
+ 265              		.size	sys_location, 4
+ 266              	sys_location:
+ 267 008c 00000000 		.space	4
+ 268              		.type	sys_starttime, %object
+ 269              		.size	sys_starttime, 4
+ 270              	sys_starttime:
+ 271 0090 00000000 		.space	4
+ 272              		.ident	"GCC: (GNU) 4.4.2"
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccwlIVEP.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 snmp.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccwlIVEP.s:3      .text:00000000 $a
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccwlIVEP.s:5      .text:00000000 MibVarsOwnGet
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccwlIVEP.s:89     .text:0000011c $d
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccwlIVEP.s:95     .text:00000130 $a
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccwlIVEP.s:97     .text:00000130 T.26
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccwlIVEP.s:121    .text:00000168 MibRegisterOwnVars
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccwlIVEP.s:177    .text:00000224 $d
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccwlIVEP.s:204    .data:00000000 $d
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccwlIVEP.s:208    .data:00000000 base_oid
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccwlIVEP.s:218    .data:0000001c sys_services
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccwlIVEP.s:222    .data:00000020 mib_variables
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccwlIVEP.s:245    .bss:00000000 $d
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccwlIVEP.s:249    .bss:00000000 empty.2504
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccwlIVEP.s:254    .bss:00000004 sys_descr
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccwlIVEP.s:258    .bss:00000084 sys_contact
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccwlIVEP.s:262    .bss:00000088 sys_name
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccwlIVEP.s:266    .bss:0000008c sys_location
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccwlIVEP.s:270    .bss:00000090 sys_starttime
+
+UNDEFINED SYMBOLS
+malloc
+memcpy
+SnmpOidCmp
+puts
+free
+strlen
+strcpy
+strcat
+NutVersionString
+getenv
+time
+SnmpMibRegister
+confos

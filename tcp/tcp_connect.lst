@@ -1,0 +1,210 @@
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccOnJfHb.s 			page 1
+
+
+   1              		.file	"tcp_connect.c"
+   2              		.text
+   3              		.align	2
+   4              		.global	tcp_connect
+   5              		.type	tcp_connect, %function
+   6              	tcp_connect:
+   7              		@ Function supports interworking.
+   8              		@ args = 0, pretend = 0, frame = 128
+   9              		@ frame_needed = 0, uses_anonymous_args = 0
+  10 0000 F0402DE9 		stmfd	sp!, {r4, r5, r6, r7, lr}
+  11 0004 0050A0E3 		mov	r5, #0
+  12 0008 80D04DE2 		sub	sp, sp, #128
+  13 000c 0160A0E1 		mov	r6, r1
+  14 0010 04008DE2 		add	r0, sp, #4
+  15 0014 0510A0E1 		mov	r1, r5
+  16 0018 7C20A0E3 		mov	r2, #124
+  17 001c 00508DE5 		str	r5, [sp, #0]
+  18 0020 FEFFFFEB 		bl	memset
+  19              	.L7:
+  20 0024 3C019FE5 		ldr	r0, .L13
+  21 0028 FEFFFFEB 		bl	puts
+  22 002c 0510A0E1 		mov	r1, r5
+  23 0030 34019FE5 		ldr	r0, .L13+4
+  24 0034 FEFFFFEB 		bl	printf
+  25 0038 30019FE5 		ldr	r0, .L13+8
+  26 003c FEFFFFEB 		bl	puts
+  27 0040 FEFFFFEB 		bl	NutTcpCreateSocket
+  28 0044 004050E2 		subs	r4, r0, #0
+  29 0048 24019FE5 		ldr	r0, .L13+12
+  30 004c 3F00000A 		beq	.L2
+  31 0050 FEFFFFEB 		bl	puts
+  32 0054 0600A0E1 		mov	r0, r6
+  33 0058 FEFFFFEB 		bl	inet_addr
+  34 005c 14219FE5 		ldr	r2, .L13+16
+  35 0060 0010A0E1 		mov	r1, r0
+  36 0064 0400A0E1 		mov	r0, r4
+  37 0068 FEFFFFEB 		bl	NutTcpConnect
+  38 006c 000050E3 		cmp	r0, #0
+  39 0070 3100001A 		bne	.L3
+  40 0074 00019FE5 		ldr	r0, .L13+20
+  41 0078 FEFFFFEB 		bl	puts
+  42 007c FA0FA0E3 		mov	r0, #1000
+  43 0080 FEFFFFEB 		bl	NutSleep
+  44 0084 0400A0E1 		mov	r0, r4
+  45 0088 F0109FE5 		ldr	r1, .L13+24
+  46 008c FEFFFFEB 		bl	_fdopen
+  47 0090 006050E2 		subs	r6, r0, #0
+  48 0094 2100000A 		beq	.L4
+  49 0098 E4009FE5 		ldr	r0, .L13+28
+  50 009c FEFFFFEB 		bl	puts
+  51 00a0 0610A0E1 		mov	r1, r6
+  52 00a4 DC009FE5 		ldr	r0, .L13+32
+  53 00a8 FEFFFFEB 		bl	fputs
+  54 00ac 0600A0E1 		mov	r0, r6
+  55 00b0 FEFFFFEB 		bl	fflush
+  56 00b4 FA0FA0E3 		mov	r0, #1000
+  57 00b8 FEFFFFEB 		bl	NutSleep
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccOnJfHb.s 			page 2
+
+
+  58 00bc C8009FE5 		ldr	r0, .L13+36
+  59 00c0 FEFFFFEB 		bl	puts
+  60 00c4 0D50A0E1 		mov	r5, sp
+  61              	.L11:
+  62 00c8 0620A0E1 		mov	r2, r6
+  63 00cc 8010A0E3 		mov	r1, #128
+  64 00d0 0D00A0E1 		mov	r0, sp
+  65 00d4 FEFFFFEB 		bl	fgets
+  66 00d8 0D00A0E1 		mov	r0, sp
+  67 00dc FEFFFFEB 		bl	strlen
+  68 00e0 0D10A0E1 		mov	r1, sp
+  69 00e4 0070A0E1 		mov	r7, r0
+  70 00e8 A0009FE5 		ldr	r0, .L13+40
+  71 00ec FEFFFFEB 		bl	printf
+  72 00f0 0710A0E1 		mov	r1, r7
+  73 00f4 98009FE5 		ldr	r0, .L13+44
+  74 00f8 FEFFFFEB 		bl	printf
+  75 00fc 0030DDE5 		ldrb	r3, [sp, #0]	@ zero_extendqisi2
+  76 0100 650053E3 		cmp	r3, #101
+  77 0104 EFFFFF1A 		bne	.L11
+  78 0108 0130DDE5 		ldrb	r3, [sp, #1]	@ zero_extendqisi2
+  79 010c 6E0053E3 		cmp	r3, #110
+  80 0110 ECFFFF1A 		bne	.L11
+  81 0114 0230DDE5 		ldrb	r3, [sp, #2]	@ zero_extendqisi2
+  82 0118 640053E3 		cmp	r3, #100
+  83 011c E9FFFF1A 		bne	.L11
+  84              	.L4:
+  85 0120 0400A0E1 		mov	r0, r4
+  86 0124 FEFFFFEB 		bl	NutTcpCloseSocket
+  87 0128 68009FE5 		ldr	r0, .L13+48
+  88 012c FEFFFFEB 		bl	printf
+  89 0130 80D08DE2 		add	sp, sp, #128
+  90 0134 F040BDE8 		ldmfd	sp!, {r4, r5, r6, r7, lr}
+  91 0138 1EFF2FE1 		bx	lr
+  92              	.L3:
+  93 013c 58009FE5 		ldr	r0, .L13+52
+  94 0140 FEFFFFEB 		bl	puts
+  95 0144 0400A0E1 		mov	r0, r4
+  96 0148 FEFFFFEB 		bl	NutTcpCloseSocket
+  97 014c 010000EA 		b	.L6
+  98              	.L2:
+  99 0150 48009FE5 		ldr	r0, .L13+56
+ 100 0154 FEFFFFEB 		bl	puts
+ 101              	.L6:
+ 102 0158 FA0FA0E3 		mov	r0, #1000
+ 103 015c FEFFFFEB 		bl	NutSleep
+ 104 0160 015085E2 		add	r5, r5, #1
+ 105 0164 AEFFFFEA 		b	.L7
+ 106              	.L14:
+ 107              		.align	2
+ 108              	.L13:
+ 109 0168 00000000 		.word	.LC0
+ 110 016c 01000000 		.word	.LC1
+ 111 0170 14000000 		.word	.LC2
+ 112 0174 34000000 		.word	.LC3
+ 113 0178 01040000 		.word	1025
+ 114 017c 46000000 		.word	.LC4
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccOnJfHb.s 			page 3
+
+
+ 115 0180 4D000000 		.word	.LC5
+ 116 0184 51000000 		.word	.LC6
+ 117 0188 55000000 		.word	.LC7
+ 118 018c 59000000 		.word	.LC8
+ 119 0190 5E000000 		.word	.LC9
+ 120 0194 61000000 		.word	.LC10
+ 121 0198 65000000 		.word	.LC11
+ 122 019c 6C000000 		.word	.LC12
+ 123 01a0 78000000 		.word	.LC13
+ 124              		.size	tcp_connect, .-tcp_connect
+ 125              		.section	.rodata.str1.1,"aMS",%progbits,1
+ 126              	.LC0:
+ 127 0000 00       		.ascii	"\000"
+ 128              	.LC1:
+ 129 0001 59726974 		.ascii	"Yritys numero: %d\012\000"
+ 129      7973206E 
+ 129      756D6572 
+ 129      6F3A2025 
+ 129      640A00
+ 130              	.LC2:
+ 131 0014 4B6F6974 		.ascii	"Koitetaan saada sukka aikaan...\000"
+ 131      65746161 
+ 131      6E207361 
+ 131      61646120 
+ 131      73756B6B 
+ 132              	.LC3:
+ 133 0034 53756B6B 		.ascii	"Sukka muodostettu\000"
+ 133      61206D75 
+ 133      6F646F73 
+ 133      74657474 
+ 133      7500
+ 134              	.LC4:
+ 135 0046 59687465 		.ascii	"Yhteys\000"
+ 135      797300
+ 136              	.LC5:
+ 137 004d 722B6200 		.ascii	"r+b\000"
+ 138              	.LC6:
+ 139 0051 456B6100 		.ascii	"Eka\000"
+ 140              	.LC7:
+ 141 0055 67657400 		.ascii	"get\000"
+ 142              	.LC8:
+ 143 0059 546F6B61 		.ascii	"Toka\000"
+ 143      00
+ 144              	.LC9:
+ 145 005e 257300   		.ascii	"%s\000"
+ 146              	.LC10:
+ 147 0061 25640A00 		.ascii	"%d\012\000"
+ 148              	.LC11:
+ 149 0065 0A6C6F70 		.ascii	"\012loppu\000"
+ 149      707500
+ 150              	.LC12:
+ 151 006c 45692079 		.ascii	"Ei yhteytt\344\000"
+ 151      68746579 
+ 151      7474E400 
+ 152              	.LC13:
+ 153 0078 45692073 		.ascii	"Ei saatu sukkaa aikaan\000"
+ 153      61617475 
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccOnJfHb.s 			page 4
+
+
+ 153      2073756B 
+ 153      6B616120 
+ 153      61696B61 
+ 154              		.ident	"GCC: (GNU) 4.4.2"
+ARM GAS  C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccOnJfHb.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 tcp_connect.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccOnJfHb.s:3      .text:00000000 $a
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccOnJfHb.s:6      .text:00000000 tcp_connect
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ccOnJfHb.s:109    .text:00000168 $d
+
+UNDEFINED SYMBOLS
+memset
+puts
+printf
+NutTcpCreateSocket
+inet_addr
+NutTcpConnect
+NutSleep
+_fdopen
+fputs
+fflush
+fgets
+strlen
+NutTcpCloseSocket
